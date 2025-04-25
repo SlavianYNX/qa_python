@@ -66,3 +66,18 @@ class TestBooksCollector:
         collector.set_book_genre('Шрек', 'Мультфильмы')
         books_genre = {'Колобок': 'Мультфильмы', 'Шрек': 'Мультфильмы'}
         assert collector.get_books_genre() == books_genre
+
+    def test_get_books_for_children_return_books_children(self):
+        collector = BooksCollector()
+        collector.genre = ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
+        collector.genre_age_rating = ['Ужасы', 'Детективы']
+        collector.books_genre = {
+            'Колобок': 'Мультфильмы',
+            'Чужой': 'Ужасы',
+            'Гарри Потер': 'Фантастика',
+            'Агата Кристи': 'Детективы'
+        }
+        result = ['Колобок', 'Гарри Потер']
+        result_new = ['Чужой', 'Агата Кристи']
+        assert collector.get_books_for_children() == result
+        assert collector.get_books_for_children() != result_new
