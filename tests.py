@@ -81,3 +81,11 @@ class TestBooksCollector:
         result_new = ['Чужой', 'Агата Кристи']
         assert collector.get_books_for_children() == result
         assert collector.get_books_for_children() != result_new
+
+    def test_add_book_in_favorites_add_book(self):
+        collector = BooksCollector()
+        books_genre = 'Чужой'
+        collector.add_new_book(books_genre)
+        collector.add_book_in_favorites(books_genre)
+        assert books_genre in collector.favorites
+        assert len(collector.favorites) == 1
