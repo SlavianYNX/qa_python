@@ -50,3 +50,10 @@ class TestBooksCollector:
         collector.add_new_book(book_name)
         collector.set_book_genre(book_name, genre)
         assert collector.get_book_genre(book_name) == genre
+
+    def test_get_books_with_specific_genre_list_book(self):
+        collector = BooksCollector()
+        collector.add_new_book('Гарри Поттер')
+        collector.set_book_genre('Гарри Поттер', 'Фантастика')
+        assert collector.get_books_with_specific_genre('Фантастика') == ['Гарри Поттер']
+        assert collector.get_books_with_specific_genre('Приключения') == []
