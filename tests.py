@@ -96,3 +96,8 @@ class TestBooksCollector:
         collector.add_book_in_favorites(book_new)
         collector.delete_book_from_favorites(book_new)
         assert book_new not in collector.favorites
+
+    def test_get_list_of_favorites_books_get_list(self):
+        collector = BooksCollector()
+        collector.favorites = ['Чужой', 'Колобок', 'Шерлок Холмс']
+        assert collector.get_list_of_favorites_books() == ['Чужой', 'Колобок', 'Шерлок Холмс']
