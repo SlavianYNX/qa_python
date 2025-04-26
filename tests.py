@@ -51,7 +51,7 @@ def test_set_book_genre_new_genre_book(collector):
 def test_get_book_genre_by_name(collector, book_name, genre):
     collector.add_new_book(book_name)
     collector.set_book_genre(book_name, genre)
-    assert collector.get_book_genre(book_name) == genre
+    assert collector.books_genre[book_name] == genre
 
 
 def test_get_books_with_specific_genre_list_book(collector):
