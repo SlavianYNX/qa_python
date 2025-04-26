@@ -57,7 +57,11 @@ def test_get_book_genre_by_name(collector, book_name, genre):
 def test_get_books_with_specific_genre_list_book(collector):
     collector.add_new_book('Гарри Поттер')
     collector.set_book_genre('Гарри Поттер', 'Фантастика')
-    assert collector.get_books_with_specific_genre('Фантастика') == ['Гарри Поттер']
+    collector.add_new_book('1984')
+    collector.set_book_genre('1984', 'Фантастика')
+    collector.add_new_book('Война и мир')
+    collector.set_book_genre('Война и мир', 'Детективы')
+    assert collector.get_books_with_specific_genre('Фантастика') == ['Гарри Поттер', '1984']
     assert collector.get_books_with_specific_genre('Приключения') == []
 
 
