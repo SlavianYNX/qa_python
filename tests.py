@@ -75,8 +75,6 @@ def test_get_books_genre_get_dictionary(collector):
 
 
 def test_get_books_for_children_return_books_children(collector):
-    collector.genre = ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
-    collector.genre_age_rating = ['Ужасы', 'Детективы']
     collector.books_genre = {
         'Колобок': 'Мультфильмы',
         'Чужой': 'Ужасы',
