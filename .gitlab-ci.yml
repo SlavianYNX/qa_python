@@ -1,0 +1,27 @@
+```yaml
+stages:
+  - test
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+test_job:
+  stage: test
+  image: python:3.9
+  before_script:
+    - python --version
+    - pip install --upgrade pip
+    - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - pip install pytest pytest-cov
+  script:
+    - pytest --cov=./ --cov-report=html
+  artifacts:
+    when: always
+    paths:
+      - htmlcov/
+    expire_in: 1 week
+```
