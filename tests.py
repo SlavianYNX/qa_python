@@ -45,6 +45,7 @@ def test_set_book_genre_new_genre_book(collector):
     assert book_one in collector.books_genre
     assert collector.get_book_genre(book_one) == 'Комедии'
 
+
 @pytest.mark.parametrize('book_name, genre', {('Чужой', 'Ужасы'),
     ('Преступление и наказание', 'Детективы'),
     ('Гарри Поттер и философский камень', 'Фантастика')})
