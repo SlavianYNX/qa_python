@@ -157,7 +157,7 @@ def test_add_book_in_favorites_without_adding_book(collector):
 
 
 # Тест: повторное добавление в избранное не дублирует элемент
-def test_add_book_in_favorites_duplicate_favorite(collector):
+def test_add_book_in_favorites_duplicate_favorite(collector98998):
     book = 'Любимая книга'
     collector.add_new_book(book)
     collector.add_book_in_favorites(book)
