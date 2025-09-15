@@ -106,3 +106,97 @@ def test_delete_book_from_favorites_delete_book(collector):
 def test_get_list_of_favorites_books_get_list(collector):
     collector.favorites = ['Чужой', 'Колобок', 'Шерлок Холмс']
     assert collector.get_list_of_favorites_books() == ['Чужой', 'Колобок', 'Шерлок Холмс']
+
+
+# Дополнительные тесты
+
+# Тест: не добавлять книгу с пустым именем
+def test_add_new_book_empty_name(collector):
+    collector.add_new_book('')
+    assert '' not in collector.books_genre
+    assert len(collector.get_books_genre()) == 0
+
+
+# Тест: граничные значения длины имени (40 допустимо, 41 — нет)
+def test_add_new_book_name_length_boundary(collector):
+    name_40 = 'x' * 40
+    name_41 = 'y' * 41
+    collector.add_new_book(name_40)
+    collector.add_new_book(name_41)
+    assert name_40 in collector.books_genre
+    assert name_41 not in collector.books_genre
+
+
+# Тест: добавление дубликата книги не создаёт второй записи
+def test_add_duplicate_book(collector):
+    name = 'Дублированная книга'
+    collector.add_new_book(name)
+    collector.add_new_book(name)
+    # словарь должен содержать только одну запись
+    assert list(collector.get_books_genre().keys()).count(name) == 1
+
+
+# Тест: установка жанра для несуществующей книги — ничего не меняется
+def test_set_genre_for_nonexistent_book(collector):
+    collector.set_book_genre('Несуществующая', 'Фантастика')
+    assert collector.get_book_genre('Несуществующая') is None
+
+
+# Тест: попытка установить недопустимый жанр — жанр не устанавливается
+def test_set_invalid_genre_not_in_list(collector):
+    book = 'Книга с неверным жанром'
+    collector.add_new_book(book)
+    collector.set_book_genre(book, 'НеЖанр')
+    assert collector.get_book_genre(book) == ''
+
+
+# Тест: добавить в избранное книгу, которой нет в коллекции — не добавлять
+def test_add_book_in_favorites_without_adding_book(collector):
+    collector.add_book_in_favorites('НеДобавленнаяКнига')
+    assert 'НеДобавленнаяКнига' not in collector.favorites
+
+
+# Тест: повторное добавление в избранное не дублирует элемент
+def test_add_book_in_favorites_duplicate_favorite(collector):
+    book = 'Любимая книга'
+    collector.add_new_book(book)
+    collector.add_book_in_favorites(book)
+    collector.add_book_in_favorites(book)
+    assert collector.favorites.count(book) == 1
+    assert len(collector.favorites) == 1
+
+
+# Тест: удаление несуществующей книги из избранного — не вызывает ошибок и не меняет список
+def test_delete_nonexistent_favorite(collector):
+    # Начинаем с пустого favorites
+    collector.delete_book_from_favorites('Нету')
+    assert collector.favorites == []
+
+
+# Тест: get_books_with_specific_genre на пустой коллекции возвращает []
+def test_get_books_with_specific_genre_empty_collection(collector):
+    assert collector.get_books_with_specific_genre('Фантастика') == []
+
+
+# Тест: книги с жанром вне списка genre игнорируются в get_books_for_children
+def test_get_books_for_children_ignores_invalid_genre(collector):
+    collector.books_genre = {'СтраннаяКнига': 'НеИзвестныйЖанр'}
+    assert collector.get_books_for_children() == []
+
+
+# Тест: полный рабочий сценарий — согласованность
+def test_workflow_state_consistency(collector):
+    a = 'Книга A'
+    b = 'Книга B'
+    collector.add_new_book(a)
+    collector.add_new_book(b)
+    collector.set_book_genre(a, 'Фантастика')
+    collector.set_book_genre(b, 'Ужасы')
+    collector.add_book_in_favorites(a)
+    collector.add_book_in_favorites(b)
+    collector.delete_book_from_favorites(b)
+
+    assert collector.get_book_genre(a) == 'Фантастика'
+    assert collector.get_book_genre(b) == 'Ужасы'
+    assert a in collector.favorites and b not in collector.favorites
+    assert collector.get_books_with_specific_genre('Фантастика') == [a]
