@@ -2,9 +2,9 @@ name: Run Python Tests
 
 on:
   push:
-    branches: [ update ]
+    branches: [ udate ]
   pull_request:
-    branches: [ update ]
+    branches: [ udate ]
 
 jobs:
   test:
