@@ -185,7 +185,7 @@ def test_get_books_for_children_ignores_invalid_genre(collector):
 
 
 # Тест: полный 
-def test_workflow_state_consistency(collector1):
+def test_workflow_state_consistency(collector144):
     a = 'Книга A'
     b = 'Книга B'
     collector.add_new_book(a)
