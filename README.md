@@ -18,3 +18,6 @@
 8. test_add_book_in_favorites_add_book: тест проверяет корректность добавления книги в список избранных книг.
 9. test_delete_book_from_favorites_delete_book: тест проверяет корректность удаления книги из списка избранных книг.
 10. test_get_list_of_favorites_books_get_list: тест проверяет корректность получения списка избранных книг.
+
+Команда для запуска тестов
+pytest -v
